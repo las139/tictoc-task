@@ -53,6 +53,10 @@
 ## 기본공고와 공고 주소 모델링
 ![](modeling.png)
 
+## ERD
+[ERD 링크](https://www.erdcloud.com/d/92rMKjPaa4LTaNXTS)
+![](ERD.png)
+
 ***
 
 ## Entity
@@ -135,7 +139,7 @@
 ***
 
 ## 📈 To-Do
-- [ ] 테이블 설계 & SQL, ERD 작성
+- [x] 테이블 설계 & SQL, ERD 작성
 - [ ] 플로우 차트 작성
 - [ ] 엔티티 연관관계 맵핑
 - [ ] 위,경도 데이터를 주소로 변환하는 지오코딩 서비스 구현 (국토교통부 오픈 API 이용) 
