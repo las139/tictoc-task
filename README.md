@@ -1,5 +1,14 @@
 # 🚀 선생님 공고 추천
 
+## 💻 개발 환경
+- Java (17)
+- Spring Boot (3.2.2)
+- Gradle (8.5)
+- MySql (8.3.0)
+- JPA
+
+***
+
 ## 📄 API 요구사항
 - 공고 추천 API
     + requestBody -> 공고 주소 정보 (위도, 경도, 주소, 우편번호)
@@ -51,11 +60,11 @@
 ***
 
 ## 기본공고와 공고 주소 모델링
-![](modeling.png)
+![](src/main/resources/image/modeling.png)
 
 ## ERD
 [ERD 링크](https://www.erdcloud.com/d/92rMKjPaa4LTaNXTS)
-![](ERD.png)
+![](src/main/resources/image/ERD.png)
 
 ***
 
