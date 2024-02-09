@@ -2,23 +2,23 @@
 CREATE TABLE job_posting (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     parent_id BIGINT NOT NULL,
-    address_id BIGINT NOT NULL,
     details TEXT NOT NULL,
     create_date DATETIME NOT NULL,
     update_date DATETIME,
-    FOREIGN KEY (parent_id) REFERENCES parent(id),
-    FOREIGN KEY (address_id) REFERENCES job_posting_address(id)
+    FOREIGN KEY (parent_id) REFERENCES parent(id)
 );
 
 -- JobPostingAddress Table
 CREATE TABLE job_posting_address (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    job_posting_id BIGINT NOT NULL,
     detail_address VARCHAR(255) NOT NULL,
     district VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
     postal_code VARCHAR(20) NOT NULL,
     create_date DATETIME NOT NULL,
-    update_date DATETIME
+    update_date DATETIME,
+    FOREIGN KEY (job_posting_id) REFERENCES job_posting(id)
 );
 
 -- Parent Table
@@ -40,7 +40,7 @@ CREATE TABLE teacher (
 );
 
 -- TeacherAddress Table
-CREATE TABLE teacher_addresses (
+CREATE TABLE teacher_address (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     teacher_id BIGINT NOT NULL,
     address VARCHAR(255) NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE teacher_subway_station (
 CREATE TABLE teacher_preferred_area (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     teacher_id BIGINT NOT NULL,
-    area_level VARCHAR(255) NOT NULL,  -- 1. 도 / 2.시/구, 3.읍/면/동
+    area_level INT NOT NULL,  -- 1. 시/도 / 2.군/구/시
     area_name VARCHAR(255) NOT NULL,
     location POINT NOT NULL,
     create_date DATETIME NOT NULL,
