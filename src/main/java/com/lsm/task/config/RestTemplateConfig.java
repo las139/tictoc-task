@@ -1,4 +1,4 @@
-package com.lsm.task.core.config;
+package com.lsm.task.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
