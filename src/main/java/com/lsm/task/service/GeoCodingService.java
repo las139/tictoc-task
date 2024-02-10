@@ -30,14 +30,14 @@ public class GeoCodingService {
         this.restTemplate = restTemplate;
     }
 
-    public GetCoordinatesResponse getCoordinatesByAddress(String address) {
+    public GetCoordinatesResponse getCoordinatesByAddress(final String address) {
         String requestUrl = apiUrl + "?service=address&request=getcoord&version=" + VERSION + "&crs=" + EPSG +
             "&address=" + address +
             "&refine=true&simple=false&format=json&type=road&key=" + apiKey;
 
         try {
             GetCoordinatesResponse response = restTemplate.getForObject(requestUrl, GetCoordinatesResponse.class);
-            if (Objects.requireNonNull(response).getResponse().getStatus().equals(STATUS_NOT_FOUND)) {
+            if (response == null || response.getResponse().getStatus().equals(STATUS_NOT_FOUND)) {
                 throw new IllegalArgumentException("위,경도에 해당하는 주소를 찾지 못했습니다.");
             }
             return response;
@@ -46,15 +46,15 @@ public class GeoCodingService {
         }
     }
 
-    public GetAddressResponse getAddressByCoordinates(double latitude, double longitude) {
+    public GetAddressResponse getAddressByCoordinates(final double latitude, final double longitude) {
         String requestUrl = apiUrl + "?service=address&request=getAddress&version=" + VERSION + "&crs=" + EPSG +
             "&point=" + (latitude + ", " + longitude) +
             "&refine=true&simple=false&format=json&type=road&zipcode=true&key=" + apiKey;
 
         try {
             GetAddressResponse response = restTemplate.getForObject(requestUrl, GetAddressResponse.class);
-            if (Objects.requireNonNull(response).getResponse().getStatus().equals(STATUS_NOT_FOUND)) {
-                throw new IllegalArgumentException("주소를에 해당하는 위,경도를 찾지 못했습니다.");
+            if (response == null || response.getResponse().getStatus().equals(STATUS_NOT_FOUND)) {
+                throw new IllegalArgumentException("주소에 해당하는 위,경도를 찾지 못했습니다.");
             }
             return response;
         } catch (RestClientException e) {
