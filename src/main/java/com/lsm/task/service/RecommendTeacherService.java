@@ -30,9 +30,9 @@ public class RecommendTeacherService {
 
     @Transactional
     public List<RecommendTeacherResponse> findMatchingTeachers(final RecommendTeacherRequest request) {
-        List<Teacher> teachersByAddress = findTeachersByAddress(request);
-        List<Teacher> teachersByPreferredAddress = findTeachersByPreferredAddress(request);
-        List<Teacher> teachersByStation = findTeachersByStation(request);
+        List<Teacher> teachersByAddress = this.findTeachersByAddress(request);
+        List<Teacher> teachersByPreferredAddress = this.findTeachersByPreferredAddress(request);
+        List<Teacher> teachersByStation = this.findTeachersByStation(request);
 
         List<Teacher> response = Stream.of(teachersByAddress.stream(), teachersByPreferredAddress.stream(), teachersByStation.stream())
                                                          .flatMap(stream -> stream)
@@ -55,12 +55,14 @@ public class RecommendTeacherService {
         return response.stream().map(RecommendTeacherResponse::of).toList();
     }
 
+    // 공고 주소와 교사 주소의 위,경도 간의 거리를 비교하여 일정 범위 내의 교사들을 찾습니다.
     @Transactional(readOnly = true)
     public List<Teacher> findTeachersByAddress(final RecommendTeacherRequest request) {
         // 공고 위,경도와 교사가 설정한 주소와 거리 비교 (5km 이내만)
         return teacherRepository.findTeachersByDistanceFromAddress(request.getLatitude(), request.getLongitude());
     }
 
+    // 공고 주소와 교사의 선호 주소를 비교하여 일치하는 교사들을 찾습니다.
     @Transactional(readOnly = true)
     public List<Teacher> findTeachersByPreferredAddress(final RecommendTeacherRequest request) {
         // 공고 위,경도와 교사가 설정한 선호 주소와 비교 (같은 도/시)
@@ -74,6 +76,7 @@ public class RecommendTeacherService {
         return teacherRepository.findTeachersByPreferredAddress(district, city);
     }
 
+    // 공고 주소와 교사의 지하철역의 위,경도 간의 거리를 비교하여 일치하는 교사들을 찾습니다.
     @Transactional(readOnly = true)
     public List<Teacher> findTeachersByStation(final RecommendTeacherRequest request) {
         // 공고 위,경도와 교사가 설정한 지하철역과 거리 비교 (1km 이내만)

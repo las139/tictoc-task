@@ -1,7 +1,5 @@
 package com.lsm.task.service;
 
-import java.util.Objects;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -30,6 +28,7 @@ public class GeoCodingService {
         this.restTemplate = restTemplate;
     }
 
+    // 주소를 위,경도로 변환한다.
     public GetCoordinatesResponse getCoordinatesByAddress(final String address) {
         String requestUrl = apiUrl + "?service=address&request=getcoord&version=" + VERSION + "&crs=" + EPSG +
             "&address=" + address +
@@ -46,6 +45,7 @@ public class GeoCodingService {
         }
     }
 
+    // 위,경도를 주소로 변환한다.
     public GetAddressResponse getAddressByCoordinates(final double latitude, final double longitude) {
         String requestUrl = apiUrl + "?service=address&request=getAddress&version=" + VERSION + "&crs=" + EPSG +
             "&point=" + (latitude + ", " + longitude) +
