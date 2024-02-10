@@ -45,6 +45,7 @@ public class RecommendTeacherService {
             if (jobPosting.isPresent()) {
                 // 매칭공고 기록 db 저장
                 JobPostingMatchedLog matchedLog = jobPostingMatchedLogRepository.save(JobPostingMatchedLog.builder().jobPosting(jobPosting.get()).teacher(t).build());
+                jobPosting.get().addMatchedLog(matchedLog);
 
                 // 알림 전송 후 전송 기록 db 저장
                 sendAlertService.sendAlert(t, matchedLog);

@@ -43,4 +43,9 @@ public class Parent extends BaseEntity {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
+
+    public void addJobPosting(JobPosting jobPosting) {
+        this.jobPostings.add(jobPosting);
+        jobPosting.setParent(this);
+    }
 }

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.lsm.task.domain.BaseEntity;
@@ -35,5 +36,14 @@ public class JobPosting extends BaseEntity {
         this.id = id;
         this.parent = parent;
         this.details = details;
+    }
+
+    public void addMatchedLog(JobPostingMatchedLog matchedLog) {
+        this.matchedLogs.add(matchedLog);
+        matchedLog.setJobPosting(this);
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 }

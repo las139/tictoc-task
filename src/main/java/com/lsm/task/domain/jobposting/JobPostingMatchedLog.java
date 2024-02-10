@@ -44,4 +44,12 @@ public class JobPostingMatchedLog extends BaseEntity {
         this.jobPosting = jobPosting;
         this.teacher = teacher;
     }
+
+    public void setJobPosting(JobPosting jobPosting) {
+        this.jobPosting = jobPosting;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
 }
