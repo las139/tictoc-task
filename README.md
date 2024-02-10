@@ -264,3 +264,14 @@ Kafka를 사용하여 Spring Boot 애플리케이션에서 비동기 메시지 �
 1. MySQL 의 Point 위치타입은 인메모리 H2 데이터베이스에서 지원하지 않아서 테스트 환경 잡는데 있어서 어려움이 있었습니다.
   - 네이티브 쿼리 내에 거리 조건이 들어가 있기 때문에 Mock 객체로 대체하여 repository 반환 결과를 임의로 설정하는 방법은 사용하지 못했고, 실제 로컬 MySQL DB 사용하되 트랜잭션 롤백 방식으로 사용.
 2. 도메인 validation 은 따로 추가하지 않고, 거리 계산 로직에 중점하여 과제 구현하였습니다.
+
+***
+
+## Swagger 화면
+![](src/main/resources/image/Swagger.png)
+
+## Database 화면
+![](src/main/resources/image/Database.png)
+
+## Postman 화면
+![](src/main/resources/image/Postman.png)
