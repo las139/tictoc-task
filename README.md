@@ -66,6 +66,9 @@
 [ERD 링크](https://www.erdcloud.com/d/92rMKjPaa4LTaNXTS)
 ![](src/main/resources/image/ERD.png)
 
+## 플로우차트
+![](src/main/resources/image/FlowChart.png)
+
 ***
 
 ## Entity
@@ -221,9 +224,12 @@ src/
 │   │               └── TaskApplication.java
 │   └── resources/
 │       └── image/
+│       │   │── Database.png
 │       │   │── ERD.png
 │       │   │── FlowChart.png
-│       │   └── modeling.png
+│       │   │── modeling.png
+│       │   │── Postman.png
+│       │   └── Swagger.png
 │       └── sql/
 │       │   └── query.sql
 │       └── application.properties
