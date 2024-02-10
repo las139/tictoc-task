@@ -1,5 +1,6 @@
-package com.lsm.task.domain;
+package com.lsm.task.domain.alert;
 
+import com.lsm.task.domain.BaseEntity;
 import com.lsm.task.domain.jobposting.JobPostingMatchedLog;
 
 import jakarta.persistence.Column;

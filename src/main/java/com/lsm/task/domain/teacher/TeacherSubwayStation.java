@@ -24,6 +24,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "teacher_subway_station")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class TeacherSubwayStation extends BaseEntity {
+    public static final int SUBWAY_DISTANCE_CONDITION = 1000;   // 거리 조건 1km
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

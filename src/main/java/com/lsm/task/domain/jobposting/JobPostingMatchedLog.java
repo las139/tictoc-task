@@ -1,6 +1,6 @@
 package com.lsm.task.domain.jobposting;
 
-import com.lsm.task.domain.AlertSendLog;
+import com.lsm.task.domain.alert.AlertSendLog;
 import com.lsm.task.domain.BaseEntity;
 import com.lsm.task.domain.teacher.Teacher;
 
@@ -39,10 +39,9 @@ public class JobPostingMatchedLog extends BaseEntity {
     private AlertSendLog alertSendLog;
 
     @Builder
-    public JobPostingMatchedLog(Long id, JobPosting jobPosting, Teacher teacher, AlertSendLog alertSendLog) {
+    public JobPostingMatchedLog(Long id, JobPosting jobPosting, Teacher teacher) {
         this.id = id;
         this.jobPosting = jobPosting;
         this.teacher = teacher;
-        this.alertSendLog = alertSendLog;
     }
 }

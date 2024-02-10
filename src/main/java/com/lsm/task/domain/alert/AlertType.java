@@ -1,4 +1,4 @@
-package com.lsm.task.domain;
+package com.lsm.task.domain.alert;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
