@@ -7,16 +7,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestExecutionListeners;
 
+import com.lsm.task.TransactionalTestExecutionListener;
 import com.lsm.task.domain.jobposting.JobPosting;
 import com.lsm.task.domain.jobposting.JobPostingAddress;
 import com.lsm.task.domain.parent.Parent;
 import com.lsm.task.repository.parent.ParentRepository;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@SpringBootTest
+@TestExecutionListeners(listeners = TransactionalTestExecutionListener.class, mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
 class JobPostingRepositoryTest {
     @Autowired
     JobPostingRepository jobPostingRepository;

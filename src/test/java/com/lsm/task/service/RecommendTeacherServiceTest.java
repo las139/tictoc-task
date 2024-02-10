@@ -5,17 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.test.context.TestExecutionListeners;
 
+import com.lsm.task.TransactionalTestExecutionListener;
 import com.lsm.task.domain.jobposting.JobPosting;
 import com.lsm.task.domain.location.Location;
 import com.lsm.task.domain.parent.Parent;
@@ -32,6 +30,7 @@ import com.lsm.task.repository.teacher.TeacherRepository;
 import com.lsm.task.repository.teacher.TeacherSubwayStationRepository;
 
 @SpringBootTest
+@TestExecutionListeners(listeners = TransactionalTestExecutionListener.class, mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
 class RecommendTeacherServiceTest {
 
     @Autowired
@@ -50,10 +49,6 @@ class RecommendTeacherServiceTest {
     @Autowired
     private RecommendTeacherService recommendTeacherService;
 
-    @Autowired
-    private PlatformTransactionManager transactionManager;
-    private TransactionStatus transactionStatus;
-
     private Parent parent;
     private JobPosting jobPosting;
     private Teacher teacherGildong;
@@ -62,8 +57,6 @@ class RecommendTeacherServiceTest {
 
     @BeforeEach
     public void setUp() {
-        transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
-
         parent = parentRepository.save(Parent.builder().name("김부모").phoneNumber("010-5344-1112").build());
         jobPosting = jobPostingRepository.save(JobPosting.builder().parent(parent).details("아이 돌봄. 2시간 희망").build());
 
@@ -202,11 +195,5 @@ class RecommendTeacherServiceTest {
 
         // then
         assertThat(result).isEmpty();
-    }
-
-    // DB 트랜잭션 롤백
-    @AfterEach
-    void afterEach() {
-        transactionManager.rollback(transactionStatus);
     }
 }

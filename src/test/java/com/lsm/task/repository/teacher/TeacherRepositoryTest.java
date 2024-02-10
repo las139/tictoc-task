@@ -7,17 +7,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestExecutionListeners;
 
+import com.lsm.task.TransactionalTestExecutionListener;
 import com.lsm.task.domain.location.Location;
 import com.lsm.task.domain.teacher.Teacher;
 import com.lsm.task.domain.teacher.TeacherAddress;
 import com.lsm.task.domain.teacher.TeacherPreferredArea;
 import com.lsm.task.domain.teacher.TeacherSubwayStation;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@SpringBootTest
+@TestExecutionListeners(listeners = TransactionalTestExecutionListener.class, mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
 class TeacherRepositoryTest {
     @Autowired
     TeacherRepository teacherRepository;
