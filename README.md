@@ -159,3 +159,108 @@
         + 선생님이 정한 주소들의 위,경도와의 거리 비교. 5km 이내일 경우
         + 선생님이 정한 지하철역 또는 노선들의 위,경도와의 거리 비교. 1km 이내일 경우
         + 선생님이 정한 선호지역들과 같은 지역인지 비교. (시/도, 군/구/시)
+
+***
+
+## 파일 구조
+```
+src/
+└── main/
+│   ├── java/
+│   │   └── com/
+│   │       └── lsm/
+│   │           └── task/
+│   │               ├── controller/
+│   │               │   └── RecommendationController.java
+│   │               ├── config/
+│   │               │   │── RestTemplateConfig.java
+│   │               │   └── SwaggerConfig.java
+│   │               ├── domain/
+│   │               │   └── alert/
+│   │               │   │   │── AlertSendLog.java
+│   │               │   │   └── AlertType.java
+│   │               │   └── jobposting/
+│   │               │   │   │── JobPosting.java
+│   │               │   │   │── JobPostingAddress.java
+│   │               │   │   └── JobPostingMatchedLog.java
+│   │               │   └── location/
+│   │               │   │   │── Location.java
+│   │               │   │   └── LocationConverter.java
+│   │               │   └── parent/
+│   │               │   │   └── Parent.java
+│   │               │   └── teacher/
+│   │               │   │   │── Teacher.java
+│   │               │   │   │── TeacheAddressr.java
+│   │               │   │   │── TeacherPreferredArea.java
+│   │               │   │   └── TeacherSubwayStation.java
+│   │               │   └── BaseEntity.java
+│   │               ├── dto/
+│   │               │   │── GetAddressResponse.java
+│   │               │   │── GetCoordinatesResponse.java
+│   │               │   │── RecommendTeacherRequest.java
+│   │               │   └── RecommendTeacherResponse.java
+│   │               │── repository/
+│   │               │   └── alert/
+│   │               │   │   └── AlertSendLogRepository.java
+│   │               │   └── jobposting/
+│   │               │   │   │── JobPostingAddressRepository.java
+│   │               │   │   │── JobPostingMatchedLogRepository.java
+│   │               │   │   └── JobPostingRepository.java
+│   │               │   └── parent/
+│   │               │   │   └── ParentRepository.java
+│   │               │   └── jobposting/
+│   │               │       │── TeacherAddressRepository.java
+│   │               │       │── TeacherPreferredAreaRepository.java
+│   │               │       └── TeacherRepository.java
+│   │               │       └── TeacherSubwayStationRepository.java
+│   │               ├── service/
+│   │               │   │── GeoCodingService.java
+│   │               │   │── RecommendationTeacherService.java
+│   │               │   └── SendALertService.java
+│   │               │── ServletInitializer.java
+│   │               └── TaskApplication.java
+│   └── resources/
+│       └── image/
+│       │   │── ERD.png
+│       │   │── FlowChart.png
+│       │   └── modeling.png
+│       └── sql/
+│       │   └── query.sql
+│       └── application.properties
+└── test/
+    └── java/
+        └── com/
+            └── lsm/
+                └── task/
+                    ├── repository/
+                    │   └── jobposting/
+                    │   │   └── JobPostingRepositoryTest.java
+                    │   └── parent/
+                    │       └── ParentRepositoryTest.java
+                    │   └── teacher/
+                    │       └── TeacherRepositoryTest.java
+                    └── service/
+                        │── GeoCodingServiceTest.java
+                        └── RecommendationTeacherServiceTest.java
+```
+
+***
+
+## 개선안
+Kafka를 사용하여 Spring Boot 애플리케이션에서 비동기 메시지 기반으로 공고 추천 시스템을 구현하는 경우, 공고가 등록되었을 때 이를 Kafka 토픽으로 전송하고, 이 토픽을 구독하는 서비스가 적절한 선생님에게 추천을 처리하는 방식으로 구현할 수 있습니다.
+- 로직 흐름
+```
+1. 부모님이 공고를 등록합니다.
+2. 공고 등록 시, Producer가 해당 공고를 Kafka 토픽으로 전송합니다.
+3. Consumer가 토픽의 메시지를 수신하여, 등록된 공고 정보를 바탕으로 적절한 선생님에게 추천하는 로직을 실행합니다.
+```
+
+이 방식을 통해 공고 추천 시스템의 비동기 처리가 가능해지며, 시스템의 확장성과 유연성이 증가합니다. Kafka를 사용함으로써 공고 등록과 추천 로직 사이의 결합도를 낮추고, 메시지 기반으로 비동기 처리를 할 수 있게 됩니다.
+
+***
+
+## 과제하면서 느낀 점
+
+1. MySQL 의 Point 위치타입은 인메모리 H2 데이터베이스에서 지원하지 않아서 테스트 환경 잡는데 있어서 어려움이 있었습니다.
+  - 네이티브 쿼리 내에 거리 조건이 들어가 있기 때문에 Mock 객체로 대체하여 repository 반환 결과를 임의로 설정하는 방법은 사용하지 못했고, 실제 로컬 MySQL DB 사용하되 트랜잭션 롤백 방식으로 사용.
+2. 도메인 validation 은 따로 추가하지 않고, 거리 계산 로직에 중점하여 과제 구현하였습니다.
