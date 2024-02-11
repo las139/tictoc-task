@@ -91,9 +91,9 @@ CREATE TABLE `job_posting_matched_log` (
 CREATE TABLE `alert_send_log` (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     matched_log_id BIGINT NOT NULL,
-	type ENUM NULL,
-	message_content VARCHAR(255) NULL,
-	send_result	VARCHAR(30)	NULL,
+	type VARCHAR(20) NOT NULL,
+	message_content VARCHAR(255) NOT NULL,
+	send_result	VARCHAR(30)	NOT NULL,
     create_date DATETIME NOT NULL,
     update_date DATETIME,
     FOREIGN KEY (matched_log_id) REFERENCES job_posting_matched_log(id)
